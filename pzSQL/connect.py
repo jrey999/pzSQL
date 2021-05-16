@@ -3,13 +3,13 @@ import psycopg2 as pgsql
 
 class Db:
 
-    def __init__(self, name, user, code, host):
+    def __init__(self, db_name, user, password, host=host):
 
-        self.name = name
+        self.db_name = db_name
         self.user = user
-        self.code = code
+        self.code = password
         self.host = host
-        self.connection = pgsql.connect(dbname=self.name, user=self.user, password=self.code, host=self.host)
+        self.connection = pgsql.connect(dbname=self.db_name, user=self.user, password=self.code, host=self.host)
         self.cursor = self.connection.cursor()
 
     def select(self, query_string):
