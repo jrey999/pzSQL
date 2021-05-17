@@ -9,6 +9,7 @@ setup(
     author_email='reynoldsjohngreg@gmail.com',
     url='https://github.com/jgr1204/pzSQL',
     install_requires=['psycopg2'],
+    setup_require=['wheel'],
     keywords=['postgres', 'psycopg2'],
     packages=['pzSQL'],
      )
