@@ -3,7 +3,7 @@ import psycopg2 as pgsql
 
 class Db:
 
-    def __init__(self, db_name, user, password, host=host):
+    def __init__(self, db_name, user, password, host):
 
         self.db_name = db_name
         self.user = user
