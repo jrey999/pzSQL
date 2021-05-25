@@ -5,6 +5,6 @@
 ```from pzSQL.pzSQL import Db```
 ####
 ####
-```db = Db(db_name, user, password, host=host)```
+```db = Db(db_name, user, password, host)```
 ####
 ```data = db.select("SELECT * FROM table")```
