@@ -25,7 +25,7 @@ class Db:
         self.cursor.execute(query_string)
         return self.cursor.fetchall()
 
-    def select_where(query_string, params):
+    def select_where(self, query_string, params):
 
         self.cursor.execute(query_string, params)
         return self.cursor.fetchall()
