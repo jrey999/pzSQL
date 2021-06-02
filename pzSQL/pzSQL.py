@@ -9,7 +9,6 @@ class Db:
         self.user = user
         self.code = code
         self.host = host
-        self.connection = pgsql.connect(dbname=self.name, user=self.user, password=self.code, host=self.host)
         self.cursor = self.connection.cursor()
 
     @property
