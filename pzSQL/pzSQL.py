@@ -12,6 +12,11 @@ class Db:
         self.connection = pgsql.connect(dbname=self.name, user=self.user, password=self.code, host=self.host)
         self.cursor = self.connection.cursor()
 
+    @property
+    def connection(self):
+
+        return pgsql.connect(dbname=self.name, user=self.user, password=self.code, host=self.host)
+
     def close_connection(self):
         """closes connection to database"""
         self.connection.close()
@@ -19,6 +24,11 @@ class Db:
     def select(self, query_string) -> list:
         """executes query and returns data"""
         self.cursor.execute(query_string)
+        return self.cursor.fetchall()
+
+    def select_where(query_string, params):
+
+        self.cursor.execute(query_string, params)
         return self.cursor.fetchall()
 
     def insert(self, statement, values):
@@ -43,7 +53,7 @@ class Db:
     def restart_connection(self):
         """closes connection and starts new one"""
         self.connection.close()
-        self.connection = pgsql.connect(dbname=self.name, user=self.user, password=self.code, host=self.host)
+        self.connection
 
     def rollback(self):
         """rollsback statements"""
@@ -58,3 +68,8 @@ class Db:
         update = self.update(statement, values)
         self.commit_transactions()
         return update
+
+    def switch_database(self, database):
+
+        self.name = database
+        return self.connection
