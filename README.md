@@ -1,5 +1,9 @@
 # PZSQL
 
+```bash
+pip install pzSQL
+```
+
 ### A half finished wrapper around psycopg2 that makes it a bit more elegant to use
 
 ```from pzSQL.pzSQL import Db```
