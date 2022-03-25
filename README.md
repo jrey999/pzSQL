@@ -12,3 +12,4 @@ pip install pzSQL
 ```db = Db(db_name, user, password, host)```
 ####
 ```data = db.select("SELECT * FROM table")```
+returns data without using ```fetchall()```
