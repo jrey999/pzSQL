@@ -25,9 +25,16 @@ class Db:
         self.cursor.execute(query_string)
         return self.cursor.fetchall()
 
+
+    def select_dict(self, query_string: str) -> list[dict]:
+
+        """executes query and returns data as a list of dictionaries"""
+        self.cursor.execute(f"SELECT json_agg(__temp_table__) FROM ({query_string}) __temp_table__;")
+        return self.cursor.fetchall()
+
     def select_where(self, query_string, params):
 
-        self.cursor.execute(query_string, params)
+        self.cursor.execute(f"SELECT json_agg(__temp_table__) FROM ({query_string}) __temp_table__;", params)
         return self.cursor.fetchall()
 
     def insert(self, statement, values):
@@ -58,9 +65,9 @@ class Db:
         """rollsback statements"""
         self.cursor.execute("ROLLBACK")
 
-    def update(self, statement, values):
-        """updates row(s) in database"""
-        return self.cusrsore.execute(statement, tuple(_ for _ in row[1:]) + (row[0],))
+    #def update(self, statement, values):
+     #   """updates row(s) in database"""
+     #   return self.cusrsore.execute(statement, tuple(_ for _ in row[1:]) + (row[0],))
 
     def update_and_commit(self, statement, values):
         """updates row(s) in database and commits transactions"""

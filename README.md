@@ -14,3 +14,6 @@ pip install pzSQL
 ```data = db.select("SELECT * FROM table")```
 
 returns data without using ```fetchall()```
+
+return data as JSON without changing the query
+```data = db.select_json("SELECT * FROM table")```
