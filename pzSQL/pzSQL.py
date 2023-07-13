@@ -20,26 +20,31 @@ class Db:
         """closes connection to database"""
         self.connection.close()
 
-    def select(self, query_string) -> list:
+    def select(self, query_string: str) -> list[tuple]:
         """executes query and returns data"""
         self.cursor.execute(query_string)
         return self.cursor.fetchall()
 
 
-    def select_dict(self, query_string: str) -> list[dict]:
+    def select_json(self, query_string: str) -> list[dict]:
 
         """executes query and returns data as a list of dictionaries"""
         self.cursor.execute(f"SELECT json_agg(__temp_table__) FROM ({query_string}) __temp_table__;")
         return self.cursor.fetchall()
 
-    def select_where(self, query_string, params):
+    def select_where(self, query_string: str, params: tuple) -> list[tuple]:
+
+        self.cursor.execute(query_string, params)
+        return self.cursor.fetchall()
+
+    def select_where_json(self, query_string: str, params: tuple) -> list[dict]:
 
         self.cursor.execute(f"SELECT json_agg(__temp_table__) FROM ({query_string}) __temp_table__;", params)
         return self.cursor.fetchall()
 
-    def insert(self, statement, values):
+    def insert(self, statement: str, values: list or tuple or dict):
         """writes query to database"""
-        return self.cursor.execute(statement, values)
+        return self.cursor.execute(statement, tuple(values.values()) if isinstance(values, dict) else tuple(values))
 
     def commit_transactions(self):
         """commits transaction to database"""
@@ -50,7 +55,7 @@ class Db:
         self.commit_transactions()
         self.connection.close()
 
-    def insert_and_commit(self, statement, values):
+    def insert_and_commit(self, statement: str, values: list or tuple or dict):
         """writes query to database and commits transaction"""
         insert = self.insert(statement, values)
         self.commit_transactions()
@@ -69,11 +74,11 @@ class Db:
      #   """updates row(s) in database"""
      #   return self.cusrsore.execute(statement, tuple(_ for _ in row[1:]) + (row[0],))
 
-    def update_and_commit(self, statement, values):
-        """updates row(s) in database and commits transactions"""
-        update = self.update(statement, values)
-        self.commit_transactions()
-        return update
+    #def update_and_commit(self, statement, values):
+     #   """updates row(s) in database and commits transactions"""
+      #  update = self.update(statement, values)
+       # self.commit_transactions()
+        #return update
 
     def switch_database(self, database):
 
